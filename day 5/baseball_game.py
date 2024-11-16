@@ -17,7 +17,7 @@ class Solution:
     def sum_previous(self):
         self.record_stack.append(self.record_stack[-1] + self.record_stack[-2])
     
-    def double_record_stack(self):
+    def double_previous(self):
         self.record_stack.append(2 * self.record_stack[-1])
 
     def invalidate_previous(self):
@@ -32,7 +32,7 @@ class Solution:
             if operation == '+':
                 self.sum_previous()
             elif operation == 'D':
-                self.double_record_stack()
+                self.double_previous()
             elif operation == 'C':
                 self.invalidate_previous()
             else:
