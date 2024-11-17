@@ -28,8 +28,7 @@ class Solution:
                 return False
         
         return True
-        
-    
+           
     def is_monotonic_decreasing(self, arr):
         for i in range(len(arr) - 1):
             if arr[i] < arr[i + 1]:
