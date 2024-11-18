@@ -31,6 +31,7 @@ class Solution:
                 continue
             
             self.container.append(matrix[i][j])
+            
             i -= 1
             j += 1
     
