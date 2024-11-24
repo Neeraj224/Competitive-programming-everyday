@@ -14,13 +14,18 @@
 
 class Solution:
     def __init__(self):
-        # self.customerOrders = []
         self.customerDetails = []
         self.ledger = set()
+        self.BUDGET_INDEX = 1
+        self.PIN_INDEX = 2
+        self.DAILY_TRANSACTIONS_INDEX = 3
+        self.DAILY_LIMIT = 10
+        self.TRANSACTION_LIMIT = 50000
             
     def solver(self, customerBudget, transactions):
         # pass
         for i in range(len(customerBudget)):
+            # building our customer structure:
             # 0 -> id, 
             # 1 -> budget, 
             # 2 -> pin
@@ -28,6 +33,7 @@ class Solution:
             self.customerDetails.append([i + 1, customerBudget[i], -1, 0])
         
         for i in range(len(transactions)):
+            # adding first-found PINs
             if self.customerDetails[transactions[i][0] - 1][2] == -1:
                 self.customerDetails[transactions[i][0] - 1][2] = transactions[i][2]
         
@@ -38,29 +44,44 @@ class Solution:
             # print(customerID)
             # print(self.customerDetails[customerID - 1])
             
+            # first we check if we've already seen this transaction or not
+            # (i.e. if its in the ledger or not):
             if (customerID, amount, pin) in self.ledger:
                 checks.append("DUPLICATE")
                 continue
             
-            if self.customerDetails[customerID - 1][3] >= 10:
+            # if the customer has already placed 10 orders that day i.e.,
+            # that is the customer has reached the daily limit of orders
+            if self.customerDetails[customerID - 1][self.DAILY_TRANSACTIONS_INDEX] >= self.DAILY_LIMIT:
                 checks.append("INVALID")
                 continue
             
-            if amount > 50000:
+            # if the customer is trying to place an order of more than the
+            # one-time transaction limit:
+            if amount > self.TRANSACTION_LIMIT:
                 checks.append("INVALID")
                 continue
             
-            if self.customerDetails[customerID - 1][2] != pin:
+            # if the customer entered the wrong PIN:
+            if self.customerDetails[customerID - 1][self.PIN_INDEX] != pin:
                 checks.append("INVALID")
                 continue
             
-            if amount > self.customerDetails[customerID - 1][1]:
+            # if the amount of the transaction is more than the
+            # the customer's remaining budget:
+            if amount > self.customerDetails[customerID - 1][self.BUDGET_INDEX]:
                 checks.append("INVALID")
                 continue
-
-            self.customerDetails[customerID - 1][1] -= amount
-            self.customerDetails[customerID - 1][3] += 1
+            
+            # if it passes all the checks
+            # then first update the customer's budget:
+            self.customerDetails[customerID - 1][self.BUDGET_INDEX] -= amount
+            # then update the customer's total transactions for the day:
+            self.customerDetails[customerID - 1][self.DAILY_TRANSACTIONS_INDEX] += 1
+            # then add the transaction to our ledger, because this is a new one and
+            # we hadn't seen it up until now:
             self.ledger.add((customerID, amount, pin))
+            # and mark this transaction as VALID!
             checks.append("VALID")
             
         print("Final Details: " + str(self.customerDetails))
