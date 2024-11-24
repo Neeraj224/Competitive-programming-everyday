@@ -14,7 +14,7 @@
 
 class Solution:
     def __init__(self):
-        self.customerOrders = []
+        # self.customerOrders = []
         self.customerDetails = []
         self.ledger = set()
             
