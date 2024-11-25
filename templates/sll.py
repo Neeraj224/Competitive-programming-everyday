@@ -7,7 +7,7 @@
         - getting the next node of a node
 """
 class ListNode:
-    def __init__(self, val):
+    def __init__(self, val = 0, next = None):
         self.val = val
         self.next = None
         
@@ -68,15 +68,29 @@ class LinkedList:
             print("There's nothing at the end of this node!")
             return None
 
+####################################################################
+
+class Solution:
+    def __init__(self):
+        pass
+    
+    def solver(self):
+        pass
+
+####################################################################
+
 def main():
     arr = [1, 2, 3, 4, 5]
+   
     listOne = LinkedList()
     listOne.buildList(elements = arr)
-    listOne.printList()
-    print(listOne.findNext(2))
-    print(listOne.findNext(5))
-    print(listOne.findNext(8))
-    print(listOne.getListLength())
+   
+   
+    # listOne.printList()
+    # print(listOne.findNext(2))
+    # print(listOne.findNext(5))
+    # print(listOne.findNext(8))
+    # print(listOne.getListLength())
 
 if __name__ == "__main__":
     main()
