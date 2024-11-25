@@ -10,6 +10,24 @@ class ListNode:
     def __init__(self, val = 0, next = None):
         self.val = val
         self.next = None
+    
+    def printListFromNode(self, head):
+        """
+            This method is for lists we need to print directly
+            from the node. Because we cannot use another list's
+            object to randomly pass a node for some other list
+            just to print it.
+        """
+        if head == None:
+            return []
+        
+        current = head
+        
+        print("[", end = "")
+        while current:
+            print(current.val, end = " -> ")
+            current = current.next
+        print("None]")
         
 class LinkedList:
     def __init__(self):
