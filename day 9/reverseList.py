@@ -131,6 +131,34 @@ class Solution:
         reverseListHead = self.buildList()
         
         return reverseListHead
+    
+    def solver2(self, head):
+        if head is None:
+            return None
+        
+        # 'previousNode': to keep track of the previous node in the reversed list
+        # 'currentNode': to traverse the original list, starting from the head
+        previousNode = None
+        currentNode = head
+        
+        while currentNode:
+            # we first temporarily store the next node to preserve the link
+            # i mean we need to go to that node next, so that we can reverse its pointer too
+            tempNodeNext = currentNode.next
+            # reverse the 'next' pointer of the current node; make it point
+            # to the previous node so that we have reversed it
+            currentNode.next = previousNode
+            # now we just move 'previousNode' and 'currentNode' one step forward
+            # so previousNode now will point to the currentNode whose pointer we just reversed
+            previousNode = currentNode
+            # and the currentNode will move on to the next node in the original list
+            # since that node was preserved by pointing a temporary pointer to it
+            # we just move currentNode to the temp pointer!
+            currentNode = tempNodeNext
+        
+        # after the end, the last node will be our head, and the list will be completely
+        # reversed, so just return it!
+        return previousNode
                 
 
 ####################################################################
@@ -142,7 +170,7 @@ def main():
     listOne.buildList(elements = arr)
    
     solver = Solution()
-    reverseListHead = solver.solver(listOne.head)
+    reverseListHead = solver.solver2(listOne.head)
     reverseListHead.printListFromNode(reverseListHead)
     
     # listOne.printList()
