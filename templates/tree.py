@@ -6,6 +6,7 @@ class TreeNode:
         self.inorderTraversal = []
         self.preorderTraversal = []
         self.postorderTraversal = []
+        self.levelorderTraversal = []
         
     def buildBST(self, elements, index, n):
         """
@@ -62,7 +63,46 @@ class TreeNode:
         self.postorder(root.right)
         self.postorderTraversal.append(root.val)
     
-    def printTraversal(self, root = None, preorder = False, inorder = False, postorder = False):
+    def levelOrder(self, root):
+        if root is None:
+            return self.levelorderTraversal
+        
+        # we set a queue first
+        queue = []
+        # next we push the root to the queue:
+        queue.append(root)
+        
+        while queue:
+            # this (sub)array is used to store the nodes
+            # on the current level of the tree
+            current_level = []
+            
+            # now we go through each and every node in the queue:
+            for _ in range(len(queue)):
+                # we get the node at the front of the queue:
+                current = queue[0]
+                
+                # next we check if this node has a left child:
+                if current.left:
+                    # if it does, we append it to the queue
+                    # so that we check it later on (and also its' children)
+                    queue.append(current.left)
+                
+                # next we do the same for the right child (if it has one):
+                if current.right:
+                    queue.append(current.right)
+                    
+                # next we pop the node from queue:
+                current_node = queue.pop(0)
+                # we take it's value
+                current_node_val = current_node.val
+                # and append it to the current_level subarray:
+                current_level.append(current_node_val)
+            
+            # then we append that current_level subarray to out traversal array:
+            self.levelorderTraversal.append(current_level)
+    
+    def printTraversal(self, root = None, preorder = False, inorder = False, postorder = False, levelorder = False):
         if preorder:
             self.preorder(root = root)
             print("preorder: ", end = "")
@@ -75,6 +115,10 @@ class TreeNode:
             self.postorder(root = root)
             print("postorder: ", end = "")
             print(self.postorderTraversal)
+        if levelorder:
+            self.levelOrder(root = root)
+            print("levelorder: ", end = "")
+            print(self.levelorderTraversal)
     
 ######################################################################
 
@@ -97,7 +141,8 @@ def main():
     
     tree1.printTraversal(root = tree1, inorder = True)
     tree1.printTraversal(root = tree1, preorder = True)
-    tree1.printTraversal(root = tree1, postorder = True)    
+    tree1.printTraversal(root = tree1, postorder = True)
+    tree1.printTraversal(root = tree1, levelorder = True)   
     
     solver = Solution()
 
