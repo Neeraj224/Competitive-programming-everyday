@@ -120,13 +120,37 @@ class TreeNode:
             print("levelorder: ", end = "")
             print(self.levelorderTraversal)
     
+    def maxDepth(self, root):
+        # if there's no root
+        if not root:
+            # we return 0 to add
+            return 0
+
+        # now first get the left subtree's depth:
+        left_depth = self.maxDepth(root.left)
+        # then next get the right subtree's depth:
+        right_depth = self.maxDepth(root.right)
+        # now, from whatever the depth of the subtrees
+        # take the maximum one, and add 1 to it, so that we account
+        # for the currently being explored subtree's root's height:
+        root_depth = max(left_depth, right_depth) + 1
+        
+        # and then return this root's depth:
+        return root_depth
+    
+        """
+            So, this will keep on going depth-wise and return both left
+            and right subtrees' depths and take max of that.
+            this is the DFS way.
+        """
+    
 ######################################################################
 
 class Solution:
     def __init__(self):
         pass
 
-    def solver(self):
+    def solver(self, root):
         pass
 
 ######################################################################
